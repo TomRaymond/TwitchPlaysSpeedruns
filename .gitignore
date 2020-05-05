@@ -2,6 +2,9 @@
 Config/*
 !Config/README.txt
 
+#VS Code Setting Files
+.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
