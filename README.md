@@ -12,4 +12,4 @@ win32api & win32con from pypiwin32 + extensions (post_install)<br />
 yaml from pyyaml<br />
 
 Notes:<br />
-The pywin32_postinstall script may need to be run as admin sdsd
+The pywin32_postinstall script may need to be run as admin
