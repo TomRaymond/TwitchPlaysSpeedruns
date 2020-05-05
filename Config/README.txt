@@ -1,0 +1,1 @@
+If this folder is empty, copy the contents of the DefaultConfigFiles folder to here and fill in the relevent data

@@ -1,0 +1,12 @@
+{
+  'PublicInputs':[
+  ]
+  'AdminInputs':[
+  ]
+}
+
+## Example 
+## 'PublicInputs':[
+##    { 'key': 'w', 'aliases': [ 'w', 'Up', 'up'], 'time': 0.1 },
+##    { 'key': 's', 'aliases': [ 's', 'Down', 'down'], 'time': 0.1 }
+##]

@@ -1,0 +1,6 @@
+#Enter your twitch username and oauth-key below, and the app connects to twitch with the details.
+#Your oauth-key can be generated at http://twitchapps.com/tmi/
+{
+  'username':'',
+  'key':''
+}

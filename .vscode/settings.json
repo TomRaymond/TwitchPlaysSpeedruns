@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.pythonPath": "C:\\Python27\\python.exe",
+    "python.autoComplete.extraPaths": ["C:\\Python27\\Lib\\site-packages\\win32", "C:\\Python27\\Lib\\site-packages\\win32\\lib","C:\\Python27\\Lib\\site-packages\\"]
+}
