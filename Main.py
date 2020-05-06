@@ -31,16 +31,16 @@ publicCommands = inputData['PublicInputs']
 # connect to twitch
 t.twitch_connect(username, key)
 
-def public_commands(msg, username):
-    print(username + ": " + msg.encode('utf-8'))
+def public_commands(msg, user):
+    print(user + ": " + msg.encode('utf-8'))
     for command in publicCommands:
         for alias in command['aliases']:
             if alias == msg: # check if this is a direct match to the key
                 keyholder.holdForSeconds(command['key'], command['time'])
                 return # do nothing else 
 
-def admin_commands(msg, username):    
-    print(username + ": " + msg.encode('utf-8'))
+def admin_commands(msg, user):    
+    print(user + ": " + msg.encode('utf-8'))
     if msg == "modcheck": print("You are a mod")
     for command in adminCommands:
         for alias in command['aliases']:
@@ -60,7 +60,7 @@ while True:
         for message in new_messages:
             #Wuhu we got a message. Let's extract some details from it
             msg = message['message'].lower()
-            username = message['username'].lower()            
-            public_commands(msg, username)
-            if(username in adminList):               
-               admin_commands(msg, username)
+            user = message['username'].lower()            
+            public_commands(msg, user)
+            if(user in adminList):               
+               admin_commands(msg, user)
