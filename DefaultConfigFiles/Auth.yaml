@@ -2,5 +2,7 @@
 #Your oauth-key can be generated at http://twitchapps.com/tmi/
 {
   'username':'',
-  'key':''
+  'key':'',  
+  'channel':'#',
+  'clientID':''
 }

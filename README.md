@@ -6,10 +6,12 @@ Additional Package Setup:<br />
 pip install pypiwin32<br />
 python pywin32_postinstall -install<br />
 pip install pyyaml<br />
+pip install twitch-python
 
 Required Libs:<br />
-win32api & win32con from pypiwin32 + extensions (post_install)<br />
-yaml from pyyaml<br />
+win32api & win32con from pypiwin32 + extensions (post_install). Required to send keyboard inputs via windows<br />
+yaml from pyyaml. Required to load yaml config files<br />
+twitch from twitch-python. User for connection and chatbot interface<br />
 
 Additional Setup:<br />
 You must add "{Your python install directory}\Lib\site-packages\win32" to your systems PYTHONPATH<br />

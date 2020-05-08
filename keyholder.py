@@ -167,7 +167,7 @@ def pressAndHold(*args):
    e.g. pressAndHold('left_arrow', 'a','b').
    '''
     for i in args:
-        win32api.keybd_event(VK_CODE[i], 0,0,0)
+        win32api.keybd_event(VK_CODE[i], 0,0,0)        
         time.sleep(2)
  
 def pressHoldRelease(*args):
