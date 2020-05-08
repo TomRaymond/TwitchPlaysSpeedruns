@@ -1,6 +1,6 @@
 # TwitchPlaysSpeedruns
 
-Built with python 2.7.14
+Built with python 3.8.2
 
 Additional Package Setup:<br />
 pip install pypiwin32<br />
