@@ -5,6 +5,9 @@ Config/*
 #VS Code Setting Files
 .vscode/
 
+#Python Venv
+.venv/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

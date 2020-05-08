@@ -1,5 +1,5 @@
-import win32api
-import win32con
+import win32api 
+import lib.win32con as win32con
 import time
 VK_CODE = {'backspace':0x08,
            'tab':0x09,

@@ -11,5 +11,9 @@ Required Libs:<br />
 win32api & win32con from pypiwin32 + extensions (post_install)<br />
 yaml from pyyaml<br />
 
+Additional Setup:<br />
+You must add "{Your python install directory}\Lib\site-packages\win32" to your systems PYTHONPATH<br />
+
 Notes:<br />
-The pywin32_postinstall script may need to be run as admin
+The pywin32_postinstall script may need to be run as admin<br />
+The required library 'win32api' is not part of the PythonPath by default<br />
