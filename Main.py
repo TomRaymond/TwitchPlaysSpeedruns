@@ -1,15 +1,66 @@
 #Define the imports
-import twitchbot
-import messagehandler
+import twitch
+import keypresser
+import keyholder
+import time
+import yaml
+t = twitch.Twitch()
 
 ConfigPath = 'Config'
 DefaultConfigPath = 'DefaultConfigPath'
+ 
 
-bot = twitchbot.TwitchBot() # init the bot
-bot.connect_chat(ConfigPath+'/Auth.yaml') # Connect the bot to twitch chat using given credentials
 
-handler = messagehandler.MessageHandler() # init the message handler
-handler.load_inputs(ConfigPath+'/InputKeys.yaml') # load the message parsing file
-handler.load_admins(ConfigPath+'/Admin.yaml') # load the admin file
+## Load in our configurations
+adminData = None
+authData = None
+inputData = None
+with open(ConfigPath+'/Admin.yaml') as adminFile:
+    adminData = yaml.load(adminFile, Loader=yaml.FullLoader)
+with open(ConfigPath+'/Auth.yaml') as authFile:
+    authData = yaml.load(authFile, Loader=yaml.FullLoader)
+with open(ConfigPath+'/InputKeys.yaml') as inputFile:
+    inputData = yaml.load(inputFile, Loader=yaml.FullLoader)
 
-bot.chat.subscribe(handler.receive_twitch_message) # assign the handler to take messages from the chat bot
+username = authData['username']
+key = authData['key']
+adminList = adminData['usernames']
+adminCommands = inputData['AdminInputs']
+publicCommands = inputData['PublicInputs']
+
+# connect to twitch
+t.twitch_connect(username, key)
+
+def public_commands(msg, user):
+    print(user + ": " + msg.encode('utf-8'))
+    for command in publicCommands:
+        for alias in command['aliases']:
+            if alias == msg: # check if this is a direct match to the key
+                keyholder.holdForSeconds(command['key'], command['time'])
+                return # do nothing else 
+
+def admin_commands(msg, user):    
+    print(user + ": " + msg.encode('utf-8'))
+    if msg == "modcheck": print("You are a mod")
+    for command in adminCommands:
+        for alias in command['aliases']:
+            if alias == msg: # check if this is a direct match to the key
+                # pass the key for the match key alias to the heyholder
+                keyholder.holdForSeconds(command['key'], command['time'])
+                return # do nothing else
+
+#The main loop
+while True:
+    # 1/5th of a second between messages checks
+    time.sleep(0.2)
+    #Check for new mesasages
+    new_messages = t.twitch_recieve_messages()
+ 
+    if new_messages:
+        for message in new_messages:
+            #Wuhu we got a message. Let's extract some details from it
+            msg = message['message'].lower()
+            user = message['username'].lower()            
+            public_commands(msg, user)
+            if(user in adminList):               
+               admin_commands(msg, user)
