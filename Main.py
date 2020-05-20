@@ -1,6 +1,7 @@
 #Define the imports
 import twitchbot
 import messagehandler
+from Timer import Timer
 
 ConfigPath = 'Config'
 DefaultConfigPath = 'DefaultConfigPath'
@@ -13,3 +14,7 @@ handler.load_inputs(ConfigPath+'/InputKeys.yaml') # load the message parsing fil
 handler.load_admins(ConfigPath+'/Admin.yaml') # load the admin file
 
 bot.chat.subscribe(handler.receive_twitch_message) # assign the handler to take messages from the chat bot
+
+Timer.init_timer()
+while True:
+    Timer.update_delta_time()
