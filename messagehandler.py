@@ -2,7 +2,6 @@
 import twitch
 import yaml
 import keyholder
-import keypresser
 import GetWindow
 
 class MessageHandler:
@@ -42,6 +41,7 @@ class MessageHandler:
                 if alias == message: # check if this is a direct match to the key
                     self.emulatorWindow.make_active() # ensure window is active before seding key
                     # pass the key for the match key alias to the heyholder
+                    print("    pressed " + command['key'])
                     keyholder.holdForSeconds(command['key'], command['time'])
                     return # do nothing else
 
@@ -49,9 +49,11 @@ class MessageHandler:
         split_message = msg.split()
         #if they called for a multi command
         if(split_message[0] == "!m" or split_message[0] == "!multi"):
+            seperated_commands = split_message[1].split(',')
             i = 0
-            for commandLetter in split_message[1]: 
+            for commandLetter in seperated_commands: 
                 if(i == 10): break # run the first 10 individual letters as a command through the standard command functions
+                seperated_commands[i].strip()
                 self.public_commands(commandLetter, user, channelChat)
                 self.admin_commands(commandLetter, user, channelChat)
                 i += 1
@@ -63,7 +65,7 @@ class MessageHandler:
     def receive_twitch_message(self, message: twitch.chat.Message) -> None:
         msg = message.text.lower()
         user = message.sender.lower()
-
+        print(user + " sent: " + msg)
         if(self.multi_command(msg, user, message.chat)): return #if this message was handled by multi command, do nothing else
 
         self.public_commands(msg, user, message.chat)
