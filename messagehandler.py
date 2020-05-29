@@ -84,7 +84,7 @@ class MessageHandler:
     def receive_twitch_message(self, message: twitch.chat.Message) -> None:
         msg = message.text.lower()
         user = message.sender.lower()
-
+        print(user + " sent: " + msg)
         #if(self.multi_command(msg, user, message.chat)): return #if this message was handled by multi command, do nothing else
         # if this is a bot command (any message with a '!' at the start)
         if(msg[0] == "!"): 
