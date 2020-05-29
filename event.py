@@ -1,4 +1,4 @@
-# event.py (improved)
+# event.py (improved) https://emptypage.jp/notes/pyevent.en.html
 
 class Event(object):
     
