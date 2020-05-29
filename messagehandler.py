@@ -2,7 +2,6 @@
 import twitch
 import yaml
 import keyholder
-import keypresser
 import GetWindow
 from restartcommand import RestartCommand
 
@@ -43,6 +42,7 @@ class MessageHandler:
                 if alias == message: # check if this is a direct match to the key
                     self.emulatorWindow.make_active() # ensure window is active before seding key
                     # pass the key for the match key alias to the heyholder
+                    print("    pressed " + command['key'])
                     keyholder.holdForSeconds(command['key'], command['time'])
                     return # do nothing else
 

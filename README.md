@@ -4,7 +4,7 @@ Built with python 3.8.2
 
 Additional Package Setup:<br />
 pip install pypiwin32<br />
-python pywin32_postinstall -install<br />
+python pywin32_postinstall.py -install<br />
 pip install pyyaml<br />
 pip install twitch-python
 

@@ -13,7 +13,7 @@ DefaultConfigPath = 'DefaultConfigPath'
 bot = twitchbot.TwitchBot() # init the bot
 bot.connect_chat(ConfigPath+'/Auth.yaml') # Connect the bot to twitch chat using given credentials
 
-handler = messagehandler.MessageHandler("Untitled - Notepad") # init the message handler
+handler = messagehandler.MessageHandler("Final Fantasy III (U) (V1.0) [!] - Snes9x 1.60") # init the message handler
 handler.load_inputs(ConfigPath+'/InputKeys.yaml') # load the message parsing file
 handler.load_admins(ConfigPath+'/Admin.yaml') # load the admin file
 
