@@ -65,9 +65,11 @@ class MessageHandler:
         if(" " not in msg): return False # Must have a space 
         split_message = msg.split(" ", 1) # split on first space [!m] [j,k,l]
         if("," not in split_message[1]): return False # Must have at least 1 comma in the arguements section
-        if(split_message[0] != "!m" or split_message[0] != "!multi"): return False # command name must be either !m or !multi
 
-        return True # if none of the above return False, this is valid
+        if(split_message[0] == "!m" or split_message[0] == "!multi"): 
+            return True # command name must be either !m or !multi
+        else: 
+            return False
 
     def restart_script(self, msg, user):
         if(user not in self.adminList):
