@@ -37,14 +37,33 @@ class MessageHandler:
         self._run_command(self.adminCommands, msg)
 
     def _run_command(self, commandList, message):
+        givenInput = message
+        givenTime = None
+        if(':' in message):
+            splitMessage = message.split(':')
+            givenInput = splitMessage[0]
+            givenTime = self.convert_time_input(splitMessage[1])
+                
         for command in commandList:
             for alias in command['aliases']:
-                if alias == message: # check if this is a direct match to the key
+                if alias == givenInput: # check if this is a direct match to the key
                     self.emulatorWindow.make_active() # ensure window is active before seding key
                     # pass the key for the match key alias to the heyholder
-                    print("    pressed " + command['key'])
-                    keyholder.holdForSeconds(command['key'], command['time'])
+                    if givenTime == None:
+                        givenTime = command['time'] 
+                    print("    pressed " + command['key'] + " for " + str(givenTime) + " seconds")
+                    keyholder.holdForSeconds(command['key'], givenTime)
                     return # do nothing else
+    def convert_time_input(self, time):        
+        try:
+            convertedTime = float(time)
+            if(convertedTime < 0.2):
+                convertedTime = 0.2
+            if(convertedTime > 3):
+                convertedTime = 3
+            return convertedTime
+        except ValueError:
+            return None
 
     def multi_command(self, msg, user, channelChat):
         if(self.validate_multi_command(msg) == False): return False # not a multi command, do nothing else
