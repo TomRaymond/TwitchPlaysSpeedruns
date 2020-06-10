@@ -40,9 +40,10 @@ class Stopwatch(Timer):
         self.currentTime = 0
 
 class Countdown(Timer):
-    def __init__(self, start_time = 0, paused = False):
+    def __init__(self, start_time = 0, paused = False, loop_countdown = False):
         super(Countdown, self).__init__(start_time, paused)
         self._completion_event = event.EventHandler(event.Event(), self) # event that fires when countdown hits zero
+        self.loop_countdown = loop_countdown
     def _update(self):
         if(self.isPaused): return
 
@@ -50,6 +51,8 @@ class Countdown(Timer):
         if(self.currentTime <= 0):
             self.isPaused = True            
             self._completion_event.call()
+            if(loop_countdown is True):
+                self.reset()
 
     def reset(self):
         self.currentTime = self.startTime
