@@ -2,6 +2,7 @@ import win32gui
 import win32api 
 import lib.win32con as win32con
 import win32com.client
+import sys
 
 #hwnd = win32gui.FindWindow(None, "Untitled - Notepad")
 #hwndChild = win32gui.GetWindow(hwnd, win32con.GW_CHILD)
@@ -9,8 +10,11 @@ import win32com.client
 
 class Window:
     def __init__(self, windowName):
-        self.hwnd = win32gui.FindWindow(None, windowName)
-        self.hwndChild = win32gui.GetWindow(self.hwnd, win32con.GW_CHILD)
+        try:
+            self.hwnd = win32gui.FindWindow(None, windowName)
+            self.hwndChild = win32gui.GetWindow(self.hwnd, win32con.GW_CHILD)
+        except:
+            sys.exit('Unable find emulator window: ' + windowName)
         self.shell = win32com.client.Dispatch("WScript.Shell")
         
     def send_key(self, key):

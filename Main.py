@@ -1,21 +1,16 @@
 #Define the imports
-import twitchbot
-import messagehandler
+import os, subprocess, time # default python libs
+import twitchbot, messagehandler, configloader
 from restartcommand import RestartCommand
-import os
-import subprocess
-import time
-from Timer import Timer
+from timer import Timer
 
-ConfigPath = 'Config'
-DefaultConfigPath = 'DefaultConfigPath'
+settings = configloader.load_config('Settings.yaml')
+emulator_inputs = configloader.load_emulator_inputs(settings['emulator']['inputsFile'])
 
 bot = twitchbot.TwitchBot() # init the bot
-bot.connect_chat(ConfigPath+'/Auth.yaml') # Connect the bot to twitch chat using given credentials
+bot.connect_chat(settings['twitch']['login']) # Connect the bot to twitch chat using given credentials
 
-handler = messagehandler.MessageHandler("Final Fantasy III (U) (V1.0) [!] - Snes9x 1.60") # init the message handler
-handler.load_inputs(ConfigPath+'/InputKeys.yaml') # load the message parsing file
-handler.load_admins(ConfigPath+'/Admin.yaml') # load the admin file
+handler = messagehandler.MessageHandler(settings, emulator_inputs) # init the message handler
 
 bot.chat.subscribe(handler.receive_twitch_message) # assign the handler to take messages from the chat bot
 

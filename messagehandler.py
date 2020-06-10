@@ -6,24 +6,16 @@ import GetWindow
 from restartcommand import RestartCommand
 
 class MessageHandler:
-    def __init__(self, emulatorWindowTitle):
-        self.adminCommands = []
-        self.publicCommands = []
-        self.adminList = []
-        self.emulatorWindow = GetWindow.Window(emulatorWindowTitle)
+    def __init__(self, settings, emulatorInputs):
+        self.adminCommands = emulatorInputs['AdminInputs']
+        self.publicCommands = emulatorInputs['PublicInputs']
+        self.adminList = settings['twitch']['admins']
+        self.emulatorWindow = GetWindow.Window(settings['emulator']['windowName'])
 
     # loads a specified input file to the message handler
-    def load_inputs(self, configFile):
-        with open(configFile) as inputFile:
-            inputData = yaml.load(inputFile, Loader=yaml.FullLoader)
-            self.adminCommands = inputData['AdminInputs']
-            self.publicCommands = inputData['PublicInputs']
-        
-    # loads a list of admins to the message handler. Overrides currently active list
-    def load_admins(self, adminFile):
-        with open(adminFile) as adminFile:
-            adminData = yaml.load(adminFile, Loader=yaml.FullLoader)
-            self.adminList = adminData['usernames']
+    def load_inputs(self, inputsData):
+        self.adminCommands = inputsData['AdminInputs']
+        self.publicCommands = inputsData['PublicInputs']
 
     # commands that can run by anyone
     def public_commands(self, msg, user, channelChat):
