@@ -9,10 +9,13 @@
       "clientID": ""
     }, 
     "admins": [
-    ]
+    ],
+    "bot":{
+      "reconnectionPeriod": 300 # How long the bot will wait without seeing input before trying to reconnect
+    }
   },
   "emulator":{
-    "inputsFile": "InputKeys.yaml",
-    "windowName": ""
+    "inputsFile": "InputKeys.yaml", # Name of file containing commands that the game will use
+    "windowName": "" # title of the emulator window
   }
 }

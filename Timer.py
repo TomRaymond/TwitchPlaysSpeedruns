@@ -51,7 +51,7 @@ class Countdown(Timer):
         if(self.currentTime <= 0):
             self.isPaused = True            
             self._completion_event.call()
-            if(loop_countdown is True):
+            if(self.loop_countdown is True):
                 self.reset()
 
     def reset(self):
