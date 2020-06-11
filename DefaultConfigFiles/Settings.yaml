@@ -17,5 +17,6 @@
   "emulator":{
     "inputsFile": "InputKeys.yaml", # Name of file containing commands that the game will use
     "windowName": "" # title of the emulator window
+    "repeatDelay": 0.05
   }
 }

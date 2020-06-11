@@ -17,4 +17,5 @@ Timer.init_timer()
 # Setup restart command, allowing callbacks to Main from the subscribed message handler
 RestartCommand.init(os.getcwd(), "Main.py")
 while True:    
+    time.sleep(0.1)
     Timer.update_delta_time()
