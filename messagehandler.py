@@ -3,6 +3,7 @@ import twitch
 import yaml
 import keyholder
 import GetWindow
+from datetime import date, datetime
 from restartcommand import RestartCommand
 
 class MessageHandler:
@@ -43,8 +44,9 @@ class MessageHandler:
                     # pass the key for the match key alias to the heyholder
                     if givenTime == None:
                         givenTime = command['time'] 
-                    print("    pressed " + command['key'] + " for " + str(givenTime) + " seconds")
-                    keyholder.holdForSeconds(command['key'], givenTime)
+                    print("    pressed " + str(command['key']) + " for " + str(givenTime) + " seconds")
+                    for key in command['key']:
+                        keyholder.holdForSeconds(key, givenTime)
                     return # do nothing else
     def convert_time_input(self, time):        
         try:
@@ -61,7 +63,7 @@ class MessageHandler:
         if(self.validate_multi_command(msg) == False): return False # not a multi command, do nothing else
 
         message_arguments = msg.split(" ", 1)[1] # split on first space "!m j\n,k ,l " -> "j\n,k ,l "
-        message_arguments.translate({ord(c):None for c in ' \n\t\r'}) # remove all whitespace including tabs and endline statements "j,k ,l " -> "j,k,l"
+        message_arguments = message_arguments.translate({ord(c):None for c in ' \n\t\r'}) # remove all whitespace including tabs and endline statements "j,k ,l " -> "j,k,l"
         message_argument_list = message_arguments.split(',') # split the arguments into an iterable list "j,k,l" -> ["j","k","l"]
         i = 0
         for command in message_argument_list: 
@@ -97,10 +99,10 @@ class MessageHandler:
     def receive_twitch_message(self, message: twitch.chat.Message) -> None:
         msg = message.text.lower()
         user = message.sender.lower()
-        print(user + " sent: " + msg)
+        print(user + " sent: " + msg + " @ " + str(datetime.now()))
         #if(self.multi_command(msg, user, message.chat)): return #if this message was handled by multi command, do nothing else
         # if this is a bot command (any message with a '!' at the start)
-        if(msg[0] == "!"): 
+        if(msg[0] == "!"):
             self.bot_commands(msg, user,  message.chat) # handle it as a bot command and do nothing else
             return
         else: # see if this is a regular single command
