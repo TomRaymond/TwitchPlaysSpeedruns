@@ -3,6 +3,7 @@ import twitch
 import yaml
 import keyholder
 import GetWindow
+import re
 from datetime import date, datetime
 from restartcommand import RestartCommand
 
@@ -11,6 +12,7 @@ class MessageHandler:
         self.adminCommands = emulatorInputs['AdminInputs']
         self.publicCommands = emulatorInputs['PublicInputs']
         self.adminList = settings['twitch']['admins']
+        self.botName = settings['twitch']['login']['username']
         self.emulatorWindow = GetWindow.Window(settings['emulator']['windowName'])
 
     # loads a specified input file to the message handler
@@ -91,15 +93,44 @@ class MessageHandler:
 
         RestartCommand.onRestart.call() # call for a restart, don't bother returning as the scripts closing down
 
+    def action_log(self, msg, user, channel):
+        # valid log calls are: "!log" to have the log repeated for the user / "!log update {msg}" to change the log 
+        if(msg == "!oracle"): # if this is a call for the log, provide it and return
+            self.repeat_action_log(channel)
+            return True
+
+        if(user not in self.adminList):
+            return False # if the are not a mod, do nothing else
+        # beginning of string must start with "!log update " (^!log\supdate\s) followed by any number of characters (.+)
+        tokens = re.findall(r'^!oracle\supdate\s.+', msg)
+        if(len(tokens) == 0): return False        
+        #"!log update my new log message" -> ["!log"] ["update"] ["my new log message"]       
+        split_message = tokens[0].split(" ", 2)
+        self.save_action_log(user, split_message[2], channel)
+        return True
+
+    def repeat_action_log(self, channel):
+        with open("LogFile.txt", 'r') as logFile:
+            data = logFile.read()
+            channel.send(data)
+
+    def save_action_log(self, user, logMessage, channel):
+        with open("LogFile.txt", 'w') as logFile:
+            logFile.write("The oracle bestows knowledge from the great hero " + str(user) + " and tells you: " + str(logMessage))
+            channel.send("The Oracle appreciates your wisdom")
+        
+
     def bot_commands(self, msg, user, channel):        
         if(self.multi_command(msg, user, channel)): return # if handled by multi command, do nothing else
         if(self.restart_script(msg, user)): return # if handled by restart_script, do nothing else
+        if(self.action_log(msg, user, channel)): return
 
     # can be subscribed to the twitch bot to receive messages when sent in twitch chat
     def receive_twitch_message(self, message: twitch.chat.Message) -> None:
         msg = message.text.lower()
         user = message.sender.lower()
         print(user + " sent: " + msg + " @ " + str(datetime.now()))
+        if(self.botName.lower() == user): return # Ignore any messages from self
         #if(self.multi_command(msg, user, message.chat)): return #if this message was handled by multi command, do nothing else
         # if this is a bot command (any message with a '!' at the start)
         if(msg[0] == "!"):
