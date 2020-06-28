@@ -30,7 +30,7 @@ class TwitchBot:
         self.chat.irc.active = False
         self.chat.dispose()
         self.connect_chat(self.lastLogin)
-        print("No input for "+ self._countdownPeriod +" seconds. Refreshing Connection to Twitch.")
+        print("No input for "+ str(self._countdownPeriod )+" seconds. Refreshing Connection to Twitch.")
 
     def receive_twitch_message(self, message: twitch.chat.Message) -> None:
         self.reconnectionCountdown.reset() # if a message is received, reset the connection
