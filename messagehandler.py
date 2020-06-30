@@ -34,6 +34,7 @@ class MessageHandler:
         if(keyboardInput.keys == []): return # If input was invalid (had no matching keys) then return 
 
         self.emulatorWindow.make_active() # ensure window is active before sending key
+        print("    pressed " + str(keyboardInput.keys) + " for " + str(keyboardInput.hold_time) + " seconds")
         inputcontroller.KeyboardInput.hold_for_seconds(keyboardInput.keys, keyboardInput.hold_time)
 
     # looks up the given command, returns blank key input if none found
