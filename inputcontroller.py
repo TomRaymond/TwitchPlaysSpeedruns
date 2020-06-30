@@ -5,13 +5,10 @@ class KeyboardInput:
 
     @staticmethod
     def hold_for_seconds(keys, seconds):
-        heldTime = 0
-        while(heldTime < seconds):
-            for key in keys: # tap every key down
-                autopy.key.toggle(key, True)
+        for key in keys: # tap every key down
+            autopy.key.toggle(key, True)
             # delay before next tap and tick up our counter
-            time.sleep(KeyboardInput.repeat_delay)
-            heldTime += KeyboardInput.repeat_delay  
+        time.sleep(seconds)
         for key in keys: # key up event for all keys
                 autopy.key.toggle(key, False)
 
